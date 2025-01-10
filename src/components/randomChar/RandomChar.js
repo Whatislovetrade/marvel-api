@@ -6,7 +6,7 @@ import MarvelService from '../../services/MarvelService'
 import mjolnir from '../../resources/img/mjolnir.png';
 
 // ДЗ: когда нет описания, нужно поставить сообщение, что данных про персонажа нет
-// ДЗ 2 если теста больше чем нужно он будет обрезаться ...
+// ДЗ 2 если текста больше чем нужно он будет обрезаться ...
 
 class RandomChar extends Component {
 
