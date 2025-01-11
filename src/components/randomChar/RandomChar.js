@@ -6,15 +6,11 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import MarvelService from '../../services/MarvelService'
 import mjolnir from '../../resources/img/mjolnir.png';
+
+// ДЗ: При клике на трай загружается новый персонаж, 
+// Поменять состояние обджект фит на контаин
+// Отобразить 9 персонажей
 class RandomChar extends Component {
-
-    // eslint-disable-next-line no-useless-constructor
-    constructor(props) {
-        super(props)
-
-        this.updateChar()
-
-    }
 
     state = {
         char: {},
@@ -23,6 +19,16 @@ class RandomChar extends Component {
     }
 
     marvelService = new MarvelService()
+
+    componentDidMount() {
+        this.updateChar()
+        // this.timerId = setInterval(this.updateChar, 3000)
+        // console.log(this.timerId)
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId)
+    }
 
     onCharLoaded = (char) => {
         this.setState({char, loading: false})
