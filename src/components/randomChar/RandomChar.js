@@ -7,8 +7,6 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService'
 import mjolnir from '../../resources/img/mjolnir.png';
 
-// ДЗ: При клике на трай загружается новый персонаж, 
-// Поменять состояние обджект фит на контаин
 // Отобразить 9 персонажей
 class RandomChar extends Component {
 
@@ -22,12 +20,6 @@ class RandomChar extends Component {
 
     componentDidMount() {
         this.updateChar()
-        // this.timerId = setInterval(this.updateChar, 3000)
-        // console.log(this.timerId)
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerId)
     }
 
     onCharLoaded = (char) => {
@@ -35,16 +27,23 @@ class RandomChar extends Component {
     }
 
     onError = () => {
-        this.setState({ loading: false, error: true})
+        this.setState({ loading: false, error: true })
     }
 
     updateChar = () => {
+
+        this.setState({
+            loading: true,
+            error: false
+        })
+
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000)
-        this.marvelService
+            this.marvelService
             // eslint-disable-next-line no-undef
             .getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError)
+
     }
 
     render() {
@@ -68,7 +67,7 @@ class RandomChar extends Component {
                     <p className="randomchar__title">
                         Or choose another one
                     </p>
-                    <button className="button button__main">
+                    <button onClick={() => this.updateChar()} className="button button__main">
                         <div className="inner">try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration"/>
