@@ -28,17 +28,20 @@ class MarvelService {
     }
 
     _transformCharacter = (char) => {
-            const transformed = {
+        const transformed = {
+                id: char.id,
                 name: char.name,
                 description: char.description || 'Нет описания персонажа',
                 thumbnail: `${char.thumbnail.path}.${char.thumbnail.extension}`,
                 homepage: char.urls[0]?.url || '#',
-                wiki: char.urls[1]?.url || '#'
+                wiki: char.urls[1]?.url || '#',
+                comics: char.comics.items.length > 10 ? char.comics.items.slice(0, 10) : char.comics.items
             };
         
             if (transformed.description.length > 210) {
                 transformed.description = transformed.description.slice(0, 210) + '...';
             }
+
         
             return transformed;
    
