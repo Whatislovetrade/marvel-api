@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -18,27 +18,27 @@ const ComicsList = () => {
         onRequest(offset, true);
     }, [])
 
-    const onRequest = (offset, initial) => {
+    const onRequest = useCallback((offset, initial) => {
         initial ? setnewItemLoading(false) : setnewItemLoading(true);
         getAllComics(offset)
             .then(onComicsListLoaded)
-    }
+    },[getAllComics])
 
     const onComicsListLoaded = (newComicsList) => {
         let ended = false;
         if (newComicsList.length < 8) {
             ended = true;
         }
-        setComicsList([...comicsList, ...newComicsList]);
+        setComicsList(prevList => [...comicsList, ...newComicsList]);
         setnewItemLoading(false);
         setOffset(offset + 8);
         setComicsEnded(ended);
     }
 
     function renderItems (arr) {
-        const items = arr.map((item, i) => {
+        const items = arr.map((item) => {
             return (
-                <li className="comics__item" key={i}>
+                <li className="comics__item" key={item.id}>
                     <a href="#">
                         <img src={item.thumbnail} alt={item.title} className="comics__item-img"/>
                         <div className="comics__item-name">{item.title}</div>
