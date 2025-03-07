@@ -5,7 +5,6 @@ import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
-// import CharSearchForm from '../charSearchForm/CharSearchForm';
 
 import './charInfo.scss';
 
@@ -32,6 +31,8 @@ const CharInfo = (props) => {
     const onCharLoaded = (char) => {
         setChar(char);
     }
+
+    //FSM - finite-state machine
 
     const skeleton = char || loading || error ? null : <Skeleton/>;
     const errorMessage = error ? <ErrorMessage/> : null;
